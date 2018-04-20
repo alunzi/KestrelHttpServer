@@ -68,7 +68,7 @@ namespace Microsoft.AspNetCore.Server.Kestrel.FunctionalTests
 
                 return from maxRequestBufferSize in maxRequestBufferSizeValues
                        from ssl in sslValues
-                       from index in Enumerable.Range(0, 10)
+                       from index in Enumerable.Range(0, 100)
                        select new object[] {
                            maxRequestBufferSize.Item1,
                            ssl,
