@@ -68,18 +68,22 @@ namespace Microsoft.AspNetCore.Server.Kestrel.FunctionalTests
 
                 return from maxRequestBufferSize in maxRequestBufferSizeValues
                        from ssl in sslValues
+                       from index in Enumerable.Range(0, 10)
                        select new object[] {
                            maxRequestBufferSize.Item1,
                            ssl,
-                           maxRequestBufferSize.Item2
+                           maxRequestBufferSize.Item2,
+                           index
                        };
             }
         }
 
         [Theory]
         [MemberData(nameof(LargeUploadData))]
-        public async Task LargeUpload(long? maxRequestBufferSize, bool connectionAdapter, bool expectPause)
+        public async Task LargeUpload(long? maxRequestBufferSize, bool connectionAdapter, bool expectPause, int index)
         {
+            if (index < 0) throw new InvalidOperationException();
+
             // Parameters
             var data = new byte[_dataLength];
             var bytesWrittenTimeout = TimeSpan.FromMilliseconds(100);
